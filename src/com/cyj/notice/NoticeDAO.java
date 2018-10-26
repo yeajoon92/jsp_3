@@ -10,6 +10,7 @@ import com.cyj.board.BoardDAO;
 import com.cyj.board.BoardDTO;
 import com.cyj.page.RowNumber;
 import com.cyj.util.DBConnector;
+import com.oreilly.servlet.MultipartRequest;
 
 public class NoticeDAO implements BoardDAO {
 
@@ -48,19 +49,55 @@ public class NoticeDAO implements BoardDAO {
 
 	@Override
 	public BoardDTO selectOne(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = DBConnector.getConnect();
+		String sql="select * from notice where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);		
+		NoticeDTO nDTO = null;
+		ResultSet rs = st.executeQuery();
+		if(rs.next()) {
+			nDTO = new NoticeDTO();
+			nDTO.setNum(rs.getInt("num"));
+			nDTO.setTitle(rs.getString("title"));
+			nDTO.setContents(rs.getString("contents"));
+			nDTO.setWriter(rs.getString("writer"));
+			nDTO.setReg_date(rs.getDate("reg_date"));
+			nDTO.setHit(rs.getInt("hit"));
+		}
+		
+		DBConnector.disConnect(rs, st, con);
+		return nDTO;
 	}
-
+	
+	//sequence 가져오기
+	public int getNum() throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "select notice_seq.nextval from dual";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		rs.next();
+		int num = rs.getInt(1);
+		DBConnector.disConnect(rs, st, con);
+		return num;
+	}
+	
 	@Override
 	public int insert(BoardDTO bDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = DBConnector.getConnect();
+		String sql="insert into notice values (?, ?, ?, ?, sysdate, 0)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, bDTO.getNum());
+		st.setString(2, bDTO.getTitle());
+		st.setString(3, bDTO.getContents());
+		st.setString(4, bDTO.getWriter());
+		int result = st.executeUpdate();
+		DBConnector.disConnect(st, con);
+		return result;
 	}
 
 	@Override
 	public int update(BoardDTO bDTO) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
