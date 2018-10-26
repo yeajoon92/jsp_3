@@ -2,12 +2,19 @@ package com.cyj.page;
 
 public class Pager {
 	
+	private int totalPage;
 	private int totalBlock;
 	private int curBlock;
 	private int startNum;
 	private int lastNum;
 	private Search search;
 	
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
 	public int getTotalBlock() {
 		return totalBlock;
 	}
