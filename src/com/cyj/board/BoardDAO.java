@@ -3,6 +3,7 @@ package com.cyj.board;
 import java.util.List;
 
 import com.cyj.page.RowNumber;
+import com.cyj.page.Search;
 
 public interface BoardDAO { //methods 팀장 asks us to use
 	
@@ -23,6 +24,6 @@ public interface BoardDAO { //methods 팀장 asks us to use
 	public int delete(int num) throws Exception;
 	
 	//getCount
-	public int getCount(String kind, String search) throws Exception;
+	public int getCount(Search search) throws Exception;
 
 }
