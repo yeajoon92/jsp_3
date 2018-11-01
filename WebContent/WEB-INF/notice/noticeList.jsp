@@ -28,19 +28,19 @@
 		<div class="row">
 			
 			
-		<div>
-			<form class="form-inline" action="./noticeList.do">
-				<div class="form-group">
-					<select class="form-control" id="sel1" name="kind">
-						<option>Title</option>
-						<option>Contents</option>
-						<option>Writer</option>
-					</select>
-				    <input type="text" class="form-control" id="search" placeholder="Enter search" name="search">
-				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-		</div>
+			<div>
+				<form class="form-inline" action="./noticeList.do">
+					<div class="form-group">
+						<select class="form-control" id="sel1" name="kind">
+							<option>Title</option>
+							<option>Contents</option>
+							<option>Writer</option>
+						</select>
+					    <input type="text" class="form-control" id="search" placeholder="Enter search" name="search">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
 			
 			
 			<table class="table table-hover">
@@ -63,8 +63,8 @@
 				<%} %>
 			</table>
 		
+		</div>
 	</div>
-</div>
 
 
 
@@ -97,9 +97,7 @@
 			
 			
 			
-		</div>
-	</div>
-	
+
 <jsp:include page="../../temp/footer.jsp"></jsp:include>
 </body>
 </html>

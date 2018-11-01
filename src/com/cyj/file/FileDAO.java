@@ -48,5 +48,18 @@ public class FileDAO {
 		DBConnector.disConnect(st, con);
 		return result;
 	}
+	
+	public int deleteAll(int num) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "delete upload where num=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		int result = st.executeUpdate();
+		
+		return result;
+	}
+	
+	
+	
 
 }

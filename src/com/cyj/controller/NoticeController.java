@@ -46,7 +46,14 @@ public class NoticeController extends HttpServlet {
 			actionForward = noticeService.selectList(request, response);
 		}else if(command.equals("/noticeSelectOne.do")) {
 			actionForward = noticeService.selectOne(request, response);
+		}else if(command.equals("/noticeWrite.do")) {
+			actionForward = noticeService.insert(request, response);
+		}else if(command.equals("/noticeUpdate.do")) {
+			actionForward = noticeService.update(request, response);
+		}else if(command.equals("/noticeDelete.dp")) {
+			actionForward = noticeService.delete(request, response);
 		}
+		
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());

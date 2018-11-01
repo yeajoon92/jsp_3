@@ -6,13 +6,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cyj.action.ActionForward;
+import com.cyj.board.BoardDAO;
 import com.cyj.board.BoardDTO;
+import com.cyj.board.BoardService;
 import com.cyj.page.MakePager;
 import com.cyj.page.Pager;
 import com.cyj.page.RowNumber;
 
-public class QnaService {
+public class QnaService implements BoardService {
 	
+	@Override
+	public ActionForward insert(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ActionForward update(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ActionForward delete(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private QnaDAO qDAO;
 	
 	public QnaService() {
@@ -39,7 +59,8 @@ public class QnaService {
 			Pager pager = mk.makePage(totalCount);
 			request.setAttribute("list", ar);
 			request.setAttribute("pager", pager);
-			actionForward.setPath("../WEB-INF/qna/qnaList.jsp");
+			request.setAttribute("board", "qna");
+			actionForward.setPath("../WEB-INF/view/board/boardList.jsp");
 		} catch (Exception e) {
 			request.setAttribute("message", "Fail");
 			request.setAttribute("path", "../index.jsp");
@@ -62,6 +83,7 @@ public class QnaService {
 			bDTO = qDAO.selectOne(num);
 			
 			request.setAttribute("dto", bDTO);
+			request.setAttribute("board", "qna");
 			actionForward.setPath("../WEB-INF/qna/qnaSelectOne.jsp");
 			actionForward.setCheck(true);
 			

@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cyj.action.ActionForward;
-import com.cyj.qna.QnaService;
+import com.cyj.member.MemberService;
 
 /**
- * Servlet implementation class QnaController
+ * Servlet implementation class MemberController
  */
-@WebServlet("/QnaController")
-public class QnaController extends HttpServlet {
+@WebServlet("/MemberController")
+public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private QnaService qnaService;
+    private MemberService memberService;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaController() {
+    public MemberController() {
         super();
-        qnaService = new QnaService();
         // TODO Auto-generated constructor stub
+        memberService = new MemberService();
     }
 
 	/**
@@ -37,24 +37,36 @@ public class QnaController extends HttpServlet {
 		
 		String command = request.getPathInfo();
 		
+		//forward, redirect
 		ActionForward actionForward = null;
-		/*QnaService qnaService = new QnaService(); 위에 선언해도 됨*/
 		
-		if(command.equals("/qnaList.do")) {
-			actionForward = qnaService.selectList(request, response);
-		}else if(command.equals("/qnaSelectOne.do")) {
-			actionForward = qnaService.selectOne(request, response);
-		}else if(command.equals("/qnaWrite.do")){
-			
+		if(command.equals("/memberJoin.do")) {
+			actionForward = memberService.join(request, response);
+		}else if(command.equals("/memberLogin.do")) {
+			actionForward = memberService.login(request, response);
+		}else if(command.equals("/memberMypage.do")) {
+			actionForward = memberService.myPage(request, response);
+		}else if(command.equals("/memberUpdate.do")) {
+			actionForward = memberService.update(request, response);
+		}else if(command.equals("/memberDelete.do")) {
+			actionForward = memberService.delete(request, response);
+		}else if(command.equals("/memberLogout.do")) {
+			actionForward = memberService.logout(request, response);
+		}else { //else if(command.equals("/memberList.do"))
+			actionForward = new ActionForward();
+			actionForward.setCheck(true);
+			actionForward.setPath("../WEB-INF/view/member/memberList.jsp");
 		}
 		
 		if(actionForward.isCheck()) {
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
+			view.forward(request, response);
 		}else {
 			response.sendRedirect(actionForward.getPath());
 		}
 		
 		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
