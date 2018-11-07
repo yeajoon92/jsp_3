@@ -3,7 +3,6 @@ package com.cyj.controller;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,58 +10,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cyj.action.ActionForward;
-import com.cyj.qna.QnaService;
+import com.cyj.ajax.AjaxService;
 
 /**
- * Servlet implementation class QnaController
+ * Servlet implementation class AjaxController
  */
-@WebServlet("/QnaController")
-public class QnaController extends HttpServlet {
+@WebServlet("/AjaxController")
+public class AjaxController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private QnaService qnaService;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaController() {
+    public AjaxController() {
         super();
-        qnaService = new QnaService();
         // TODO Auto-generated constructor stub
-    }
-    
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-    	// TODO Auto-generated method stub
-    	config.getInitParameter("board");
-    	super.init(config);
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String board = this.getServletConfig().getInitParameter("board");
-		System.out.println(board);
 		
 		String command = request.getPathInfo();
-		
 		ActionForward actionForward = null;
-		/*QnaService qnaService = new QnaService(); 위에 선언해도 됨*/
 		
-		if(command.equals("/qnaList.do")) {
-			actionForward = qnaService.selectList(request, response);
-		}else if(command.equals("/qnaSelectOne.do")) {
-			actionForward = qnaService.selectOne(request, response);
-		}else if(command.equals("/qnaWrite.do")){
-			actionForward = qnaService.insert(request, response);
+		AjaxService ajaxService = new AjaxService();
+		if(command.equals("/memberCheckId.do")) {
+			actionForward = ajaxService.checkId(request, response);
+		}else if(command.equals("/memberCheckId2.do")) {
+			actionForward = ajaxService.checkId2(request, response);
+		}else if(command.equals("/memberInfo.do")) {
+			actionForward = ajaxService.memberInfo(request, response);
+		}else if(command.equals("/list.do")) {
+			actionForward = ajaxService.list(request, response);
 		}
 		
-		if(actionForward.isCheck()) {
+		
+		if(actionForward.isCheck()) { //true일 때 forward
 			RequestDispatcher view = request.getRequestDispatcher(actionForward.getPath());
-		}else {
+			view.forward(request, response);
+		}else { //false일 때 redirect
 			response.sendRedirect(actionForward.getPath());
 		}
 		
 		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

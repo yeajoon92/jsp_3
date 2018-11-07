@@ -12,6 +12,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <c:import url="../../../temp/bootStrap.jsp" />
+
+<script type="text/javascript">
+	$(function() {
+		$(".del").click(function() {
+			// /file/fileDelete.do
+			var fNum = $(this).attr("id");
+			var fName = $(this).attr("title");
+			//alert(fNum); 확인해보기
+			$.post("../file/fileDelete.do", {fNum:fNum, fName:fName}, function() {
+				data = data.trim();
+				if(data=='1'){
+					alert("Success");
+					$("#"+fNum).parent().remove();
+					//$("#p"+fNum).remove();
+				}else{
+					aler("Fail");
+				}
+			});
+		});
+		
+		
+		
+		
+	});
+	
+	
+</script>
+
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
@@ -38,9 +66,11 @@
 			</div>
 
 			<c:forEach items="${files}" var="file" varStatus="i">
-				<div class="form-group">
-					<label for="file">File:</label>
-					<input type="file" value="${file.oName}" class="form-control" id="file" name="f${i.count}">
+				<div class="form-group" id="p${file.fNum}">
+					<%-- <label for="file">File:</label>
+					<input type="file" value="${file.oName}" class="form-control" id="file" name="f${i.count}"> --%>
+					<span>${file.oName}</span>
+					<span class="del" id="${file.fNum} title="${file.fName}">X</span>
 				</div>
 			</c:forEach>
 

@@ -89,7 +89,7 @@ public class NoticeService implements BoardService {
 		}else {
 			request.setAttribute("board", "notice");
 			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/view/board/boardList.jsp");
+			actionForward.setPath("../WEB-INF/view/board/boardWrite.jsp");
 		}
 		return actionForward;
 	}
@@ -245,9 +245,9 @@ public class NoticeService implements BoardService {
 	public ActionForward selectOne(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
 		BoardDTO bDTO = null;
-		int num = Integer.parseInt(request.getParameter("num"));
 		
 		try {
+			int num = Integer.parseInt(request.getParameter("num"));
 			bDTO = nDAO.selectOne(num);
 			FileDAO fDAO = new FileDAO();
 			FileDTO fDTO = new FileDTO();
@@ -258,16 +258,16 @@ public class NoticeService implements BoardService {
 			request.setAttribute("files", ar);
 			request.setAttribute("board", "notice");
 			actionForward.setCheck(true);
-			actionForward.setPath("../WEB-INF/board/boardSelectOne.jsp");
+			actionForward.setPath("../WEB-INF/view/board/boardSelectOne.jsp");
 		} catch (Exception e) {
 			actionForward.setCheck(false);
-			actionForward.setPath("./notice/noticeList.do"); //Servlet 거쳐가려면 .do	*forward는 .jsp로 끝남
+			actionForward.setPath("./noticeList.do"); //Servlet 거쳐가려면 .do	*forward는 .jsp로 끝남
 			e.printStackTrace();
 		}
 		
 		if(bDTO == null) {
 			actionForward.setCheck(false);
-			actionForward.setPath("./notice/noticeList.do");
+			actionForward.setPath("./noticeList.do");
 		}
 		
 		return actionForward;

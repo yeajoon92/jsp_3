@@ -31,8 +31,10 @@ public class NoticeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		System.out.println("noticeController");
+		
+		String phone = request.getServletContext().getInitParameter("phone");
+		System.out.println(phone);		
 		
 		// /notice/notice***.do
 		// /notice***.do
@@ -50,7 +52,7 @@ public class NoticeController extends HttpServlet {
 			actionForward = noticeService.insert(request, response);
 		}else if(command.equals("/noticeUpdate.do")) {
 			actionForward = noticeService.update(request, response);
-		}else if(command.equals("/noticeDelete.dp")) {
+		}else if(command.equals("/noticeDelete.do")) {
 			actionForward = noticeService.delete(request, response);
 		}
 		

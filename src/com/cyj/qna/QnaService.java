@@ -42,19 +42,21 @@ public class QnaService implements BoardService {
 	//selectList
 	public ActionForward selectList(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward actionForward = new ActionForward();
-		
 		int curPage=1;
-		curPage = Integer.parseInt(request.getParameter("curPage"));
-		
+		try {
+			curPage = Integer.parseInt(request.getParameter("curPage"));
+		}catch (Exception e) {
+			
+		}
 		String kind = request.getParameter("kind");
 		String search = request.getParameter("search");
 		
 		MakePager mk = new MakePager(curPage, search, kind);
 		RowNumber rowNumber = mk.makeRow();
 		
-		
+		List<BoardDTO> ar;
 		try {
-			List<BoardDTO> ar = qDAO.selectList(rowNumber);
+			ar = qDAO.selectList(rowNumber);
 			int totalCount = qDAO.getCount(rowNumber.getSearch());
 			Pager pager = mk.makePage(totalCount);
 			request.setAttribute("list", ar);
@@ -62,9 +64,7 @@ public class QnaService implements BoardService {
 			request.setAttribute("board", "qna");
 			actionForward.setPath("../WEB-INF/view/board/boardList.jsp");
 		} catch (Exception e) {
-			request.setAttribute("message", "Fail");
-			request.setAttribute("path", "../index.jsp");
-			actionForward.setPath("../WEB-INF/common/result.jsp");
+			
 			e.printStackTrace();
 		}
 		actionForward.setCheck(true);

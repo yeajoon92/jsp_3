@@ -32,8 +32,6 @@ public class MemberController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
 		
 		String command = request.getPathInfo();
 		
@@ -42,6 +40,8 @@ public class MemberController extends HttpServlet {
 		
 		if(command.equals("/memberJoin.do")) {
 			actionForward = memberService.join(request, response);
+		}else if(command.equals("/memberCheckId.do")) {
+			actionForward = memberService.checkId(request, response);
 		}else if(command.equals("/memberLogin.do")) {
 			actionForward = memberService.login(request, response);
 		}else if(command.equals("/memberMypage.do")) {

@@ -22,23 +22,20 @@
 	<div class="container-fluid">
 		<div class="row">
 			<h1>${board}</h1>
-		</div>
-		<div class="row">
 			
-			
-		<div>
-			<form class="form-inline" action="./${board}List.do">
-				<div class="form-group">
-					<select class="form-control" id="sel1" name="kind">
-						<option>Title</option>
-						<option>Contents</option>
-						<option>Writer</option>
-					</select>
-				    <input type="text" class="form-control" id="search" placeholder="Enter search" name="search">
-				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-		</div>
+			<div>
+				<form class="form-inline" action="./${board}List.do">
+					<div class="form-group">
+						<select class="form-control" id="sel1" name="kind">
+							<option>Title</option>
+							<option>Contents</option>
+							<option>Writer</option>
+						</select>
+					    <input type="text" class="form-control" id="search" placeholder="Enter search" name="search">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
 			
 			
 			<table class="table table-hover">
@@ -97,14 +94,12 @@
 	</div>
 </div>
 			
+	
+		<c:if test="${not empty member and member.kind eq 'T'}">
+			<c:import url="../../../temp/writeButton.jsp"></c:import>
+		</c:if>
 		
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-1">
-				<a href="./${board}Write.do" class="btn btn-primary">WRITE</a>
-			</div>
-		</div>
-	</div>
+	
 	
 	
 <jsp:include page="../../../temp/footer.jsp"></jsp:include>

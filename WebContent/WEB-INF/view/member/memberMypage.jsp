@@ -13,7 +13,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<h1>ID : ${member.id}</h1>
+			<h1>ID : ${member.id} (${member.kind})</h1>
 			<h1>Name : ${member.name}</h1>
 			<h1>Email : ${member.email}</h1>
 			<img src="../upload/${member.fName}">

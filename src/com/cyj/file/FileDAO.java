@@ -10,6 +10,7 @@ import com.cyj.util.DBConnector;
 
 public class FileDAO {
 	
+	//selectList
 	public List<FileDTO> selectList(FileDTO fDTO) throws Exception {
 		List<FileDTO> ar = new ArrayList<>();
 		Connection con = DBConnector.getConnect();
@@ -34,6 +35,7 @@ public class FileDAO {
 		return ar;
 	}
 	
+	//insert
 	public int insert(FileDTO fDTO) throws Exception {
 		Connection con = DBConnector.getConnect();
 		String sql = "insert into upload values (file_seq.nextval,?,?,?,?)";
@@ -45,17 +47,36 @@ public class FileDAO {
 		st.setString(4, fDTO.getKind());
 		
 		int result = st.executeUpdate();
+		
 		DBConnector.disConnect(st, con);
 		return result;
 	}
 	
+	//delete
+	public int delete(int fNum) throws Exception {
+		Connection con = DBConnector.getConnect();
+		String sql = "delete upload where fNum=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		
+		st.setInt(1, fNum);
+		
+		int result = st.executeUpdate();
+		
+		DBConnector.disConnect(st, con);
+		return result;
+	}
+	
+	//deleteAll
 	public int deleteAll(int num) throws Exception {
 		Connection con = DBConnector.getConnect();
 		String sql = "delete upload where num=?";
 		PreparedStatement st = con.prepareStatement(sql);
+		
 		st.setInt(1, num);
+		
 		int result = st.executeUpdate();
 		
+		DBConnector.disConnect(st, con);
 		return result;
 	}
 	

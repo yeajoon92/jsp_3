@@ -24,7 +24,7 @@ public class QnaDAO implements BoardDAO, BoardReply {
 				+ "(select rownum R, N.* from "
 				+ "(select num, title, writer, reg_date, hit from qna "
 				+ "where "+rowNumber.getSearch().getKind()+" like ? "
-				+ "order by num desc) N) "
+				+ "order by ref desc, step asc) N) "
 				+ "where R between ? and ?";
 		PreparedStatement st = con.prepareStatement(sql);
 		
@@ -34,16 +34,17 @@ public class QnaDAO implements BoardDAO, BoardReply {
 		
 		ResultSet rs = st.executeQuery();
 		List<BoardDTO> ar = new ArrayList<>();
-		QnaDTO nDTO = null;
+		QnaDTO qDTO = null;
 		
 		while(rs.next()) {
-			nDTO = new QnaDTO();
-			nDTO.setNum(rs.getInt("num"));
-			nDTO.setTitle(rs.getString("title"));
-			nDTO.setWriter(rs.getString("writer"));
-			nDTO.setReg_date(rs.getDate("reg_date"));
-			nDTO.setHit(rs.getInt("hit"));
-			ar.add(nDTO);
+			qDTO = new QnaDTO();
+			qDTO.setNum(rs.getInt("num"));
+			qDTO.setTitle(rs.getString("title"));
+			qDTO.setWriter(rs.getString("writer"));
+			qDTO.setReg_date(rs.getDate("reg_date"));
+			qDTO.setHit(rs.getInt("hit"));
+			qDTO.setDepth(rs.getInt("depth"));
+			ar.add(qDTO);
 		}
 		
 		DBConnector.disConnect(rs, st, con);
